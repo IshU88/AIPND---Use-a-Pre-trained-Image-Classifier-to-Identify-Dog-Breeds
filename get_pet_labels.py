@@ -24,7 +24,6 @@ from os import listdir
 #       with this function
 # 
 def transform_pet_name(pet_name):
-    print('pet_name ',pet_name)
     low_pet_name = pet_name.lower()
 
     word_list_pet_name = low_pet_name.split("_")
@@ -59,8 +58,9 @@ def get_pet_labels(image_dir):
     filename_list = listdir(image_dir)
     petname_list = []
     for filename in filename_list:
-        transformed_name = transform_pet_name(filename)
-        petname_list.append(transformed_name)
+        if filename[0] != '.':
+            transformed_name = transform_pet_name(filename)
+            petname_list.append(transformed_name)
   
     results_dic = {}
     
