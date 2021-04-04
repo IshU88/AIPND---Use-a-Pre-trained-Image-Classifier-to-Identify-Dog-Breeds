@@ -4,7 +4,7 @@
 #                                                                             
 # PROGRAMMER: Ishara Udayanga
 # DATE CREATED: 2021-04-02                                 
-# REVISED DATE: 
+# REVISED DATE: 2021-04-03
 # PURPOSE: Create the function get_pet_labels that creates the pet labels from 
 #          the image's filename. This function inputs: 
 #           - The Image Folder as image_dir within get_pet_labels function and 
@@ -25,8 +25,8 @@ from os import listdir
 # 
 def transform_pet_name(pet_name):
     low_pet_name = pet_name.lower()
-
-    word_list_pet_name = low_pet_name.split("_")
+    jpg_removed_pet_name = low_pet_name.replace('.jpg','')
+    word_list_pet_name = jpg_removed_pet_name.split("_")
 
     transformed_pet_name = ""
 
@@ -56,16 +56,14 @@ def get_pet_labels(image_dir):
     # Replace None with the results_dic dictionary that you created with this
     # function
     filename_list = listdir(image_dir)
-    petname_list = []
-    for filename in filename_list:
-        if filename[0] != '.':
-            transformed_name = transform_pet_name(filename)
-            petname_list.append(transformed_name)
-  
     results_dic = {}
-    
     for i in range(0, len(filename_list), 1):
-        if filename_list[i] not in results_dic:
-            results_dic[filename_list[i]] = [petname_list[i]]
-    
+        if filename_list[i][0] != ".":
+            pet_label = transform_pet_name(filename_list[i])
+            if filename_list[i] not in results_dic:
+                results_dic[filename_list[i]] = [pet_label]
+            else:
+                print("** Warning: Duplicate files exist in directory:", 
+                        filename_list[i])
     return results_dic
+
